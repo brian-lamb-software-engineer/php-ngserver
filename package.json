@@ -10,8 +10,16 @@
     "type": "git",
     "url": "php-ngserve"
   },
+  "keywords": [
+    "gulp",
+    "php",
+    "livereload",
+    "browsersync",
+    "server",
+    "connect"
+  ],
   "author": "brian-lamb-software-engineer",
-  "license": "ISC",
+  "license": "MIT",
   "devDependencies": {
     "browser-sync": "^2.18.12",
     "gulp": "^3.9.1",

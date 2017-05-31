@@ -16,15 +16,16 @@
  *  your sites project root is located.  e.g. in cases where you are using this
  *  server for multiple sites, (one at a time), etc..
  * Examples:
- * $publicDir = __DIR__ . '../projects/site.com';
+ * $publicDir = __DIR__ . '../';
+ * $publicDir = __DIR__ . '../site.com';
  * $publicDir = "/home/<user>/projects/site.com";
  * or comment out, for default
  */
-$publicDir = "/home/wolfdogg/sites/wolfdogg-legacy";
+// $publicDir = "../";
 
  /**
   * if these types are files are specified, then just load them directly, no
-  *  need to proxy them
+  *  need to process them
   */
  if (preg_match('/\.(?:png|jpg|jpeg|gif)$/', $_SERVER["REQUEST_URI"]))
  {
@@ -34,7 +35,11 @@ $publicDir = "/home/wolfdogg/sites/wolfdogg-legacy";
  {
      if(!isset($publicDir))
      {
-       //adjust to your most likely default, e.g. /public, /../www, /.., etc
+       /*
+        * Adjust to your most likely default, e.g. /public, /../www, /.., etc,
+        * other than in your application dir.
+        * Default: __DIR__ . '/..';
+        */
         $publicDir = __DIR__ . '/..';
         $altloc = FALSE;
      }
@@ -58,7 +63,8 @@ $publicDir = "/home/wolfdogg/sites/wolfdogg-legacy";
  */
  function response ($publicDir, $altloc) {
 
-     echo "<p>Thanks for using php-ngserver :)</p>";
+      // Uncomment the following for initial setup testing
+     //echo "<p>Thanks for using php-ngserver :)</p>";
 
      /**
       * Use default path if not specified.
@@ -84,6 +90,5 @@ $publicDir = "/home/wolfdogg/sites/wolfdogg-legacy";
           return false;
        }
      }
-
      require_once $publicDir . '/index.php';
  }

@@ -26,7 +26,7 @@ var gulp = require('gulp'),
  */
 gulp.task('connect-sync', function() {
   connect.server({
-    router: 'serve/router.php',
+    router: 'router.php',
     port: 3000,
     livereload: true
   }, function (){

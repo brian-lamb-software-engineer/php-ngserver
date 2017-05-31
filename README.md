@@ -2,33 +2,41 @@
 php-ngserver
 ------------
 
-This is a php server middleware using browser sync combined with
- gulp-connect-php, and is intended to use your php proxy, such as php-fpm,
-  which you will need in working order and running to use.  By default it uses
-  the proxy port 9000, and the site is accessible on port 3000.   
+This is a php server that uses gulp-connect-php, and combines with browserSync.
+ It has a much quicker setup time than Apache, Nginx, or lighttpd.  It's
+ intended to be a quick and easy drop-in node.js based PHP server for testing
+ your site during development. or Its not for production since it has a blocking
+ IO, hence isn't multi threaded.   
 
 Setup instructions
 ------------------
--place outside of your project root,
--install package dependencies npm install,
--point path to your application root where your index.php file is located
--run gulp to start server
+-place the entire module inside your project root
+-add the php-ngserver directory to your .gitignore if applicable
+-install package dependencies by switching directories into php-ngserver, then
+`npm install`
+-In router.php, point the `$publicDir` path to your application root where your
+index.php file is located
+-adjust ports if necessary
+-run `gulp` to start server
 
-Alternatively to placing this package outside of your project root, you can
--place it inside your project root, then either comment out the publicDir path,
--then use an index.php inside your project root
--- or adjust the publicDir path accordingly.
+BrowserSync should launch your browser automatically, depending on your
+particular environment setup, e.g. if your browser is on the same box as your
+running gulp on, or that you properly have X11 tunnel configured and a browser
+installed to the box your shelled into if not.  
+Otherwise, the external url has been testing and is working. e.g.
+192.168.1.11:3000.
 
-Be careful if you already have an index.php in your project root, if your going
-with this latter option, since this package contains an index.php file that you
-probably dont want to overwrite yours with.  
+Check if you need to customize any browserSync and gulp-connect-php options if
+ it doesnt load out of the box, but the defaults should be enough.
+
+Alternatively to placing this package inside your project root, you can
+-place it above and or outside your project root, then just adjust the
+`$publicDir` path accordingly.
 
 
 Current issues
 --------------
-The browserSync main page accessible on port 3001 one is linking the site to be
-on port 3002, but its on port 3000, something will need to be edited next to
-fix this.
+-
 
 
 
