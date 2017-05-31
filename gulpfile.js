@@ -31,7 +31,7 @@ gulp.task('connect-sync', function() {
     livereload: true
   }, function (){
     bs.init({
-      proxy: '127.0.0.1:9000',
+      proxy: 'localhost:3000',
       ui: {
         port: 3001
       }
