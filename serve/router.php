@@ -1,23 +1,31 @@
 <?php
 /**
  * for gulp-connect-php
- * Used for development server, for wp site, no mysql solution yet.
+ * Used for development server, no mysql solution yet.
  *
  * If this script returns false, then the requested resource is returned as-is.
  * Otherwise the script's output is returned to the browser.
  */
 
+ //set error reporting level
  error_reporting(E_ALL);
 
 /**
- * optional, set your path here.  specifically for when your using this server
- * in a directory other than where your sites project root is located.  e.g.
- * in cases where you are using this server for multiple sites, etc..
+ * Optional, set your path here for the site you want to serve today,
+ *  specifically for when your using this server in a directory other than where
+ *  your sites project root is located.  e.g. in cases where you are using this
+ *  server for multiple sites, (one at a time), etc..
+ * Examples:
+ * $publicDir = __DIR__ . '../projects/site.com';
+ * $publicDir = "/home/<user>/projects/site.com";
+ * or comment out, for default
  */
- // $publicDir = __DIR__ . '../wolfdogg-legacy';
- $publicDir = "/home/wolfdogg/sites/wolfdogg-legacy";
+$publicDir = "/home/wolfdogg/sites/wolfdogg-legacy";
 
- // router.php
+ /**
+  * if these types are files are specified, then just load them directly, no
+  *  need to proxy them
+  */
  if (preg_match('/\.(?:png|jpg|jpeg|gif)$/', $_SERVER["REQUEST_URI"]))
  {
      return false;    // serve the requested resource as-is
@@ -30,6 +38,10 @@
         $publicDir = __DIR__ . '/..';
         $altloc = FALSE;
      }
+     else
+     {
+       $altloc = TRUE;
+     }
 
      return call_user_func('response', $publicDir, $altloc);
  }
@@ -40,13 +52,13 @@
  * @TODO can be elaborated on later once the response is working
  *
  * @param  string $publicDir the path to the public file dir
- * @return [type]            [description]
+ * @param  [type] $altloc    [description]
+ * @return false      skips returning so the uri file can be loaded instead
+ * @return file       loads required file
  */
  function response ($publicDir, $altloc) {
 
-   var_dump($publicDir);
-
-     //$response = echo "<p>Thanks for using gulp-connect-php :)</p>";
+     echo "<p>Thanks for using php-ngserver :)</p>";
 
      /**
       * Use default path if not specified.
@@ -55,8 +67,10 @@
      $uri = urldecode($uri);
      $requested = $publicDir . $uri;
 
-    //mimics mod_rewrite, only if we havent specified an altloc.  if we have
-    //specified, then we need to load that file anyway
+    /**
+     * Mimics mod_rewrite, only if we havent specified an altloc.  if we have
+     * specified, then we need to load that file anyway
+     */
      if ($uri !== '/' && file_exists($requested))
      {
        if ($altloc !== FALSE)
@@ -66,12 +80,10 @@
        }
        else
        {
-          //let specified load directly from default path, dont require it
+          //load the specified file directly, from default path.  Don't require it
           return false;
        }
      }
 
      require_once $publicDir . '/index.php';
-
-    //  return $publicDir;
  }

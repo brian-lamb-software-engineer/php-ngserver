@@ -4,7 +4,7 @@
 //
 var gulp = require('gulp'),
     connect = require('gulp-connect-php'),
-    browserSync = require('browser-sync');
+    bs = require('browser-sync').create();
 
 /**
   connect.server({
@@ -27,15 +27,19 @@ var gulp = require('gulp'),
 gulp.task('connect-sync', function() {
   connect.server({
     router: 'serve/router.php',
-    port: 3000
+    port: 3000,
+    livereload: true
   }, function (){
-    browserSync({
-      proxy: '127.0.0.1:9000'
+    bs.init({
+      proxy: '127.0.0.1:9000',
+      ui: {
+        port: 3001
+      }
     });
   });
 
   gulp.watch('**/*.php').on('change', function () {
-    browserSync.reload();
+    bs.reload();
   });
 
   // // watch for changes
