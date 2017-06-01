@@ -16,18 +16,18 @@
  *  your sites project root is located.  e.g. in cases where you are using this
  *  server for multiple sites, (one at a time), etc..
  * Examples:
- * $publicDir = __DIR__ . '../';
+ * $publicDir = __DIR__ . '/..';
  * $publicDir = __DIR__ . '../site.com';
  * $publicDir = "/home/<user>/projects/site.com";
  * or comment out, for default
  */
-// $publicDir = "../";
+// $publicDir = __DIR__ . '/..';
 
  /**
   * if these types are files are specified, then just load them directly, no
   *  need to process them
   */
- if (preg_match('/\.(?:png|jpg|jpeg|gif)$/', $_SERVER["REQUEST_URI"]))
+ if (preg_match('/\.(?:png|jpg|jpeg|gif|css)$/', $_SERVER["REQUEST_URI"]))
  {
      return false;    // serve the requested resource as-is
  }
@@ -47,7 +47,11 @@
      {
        $altloc = TRUE;
      }
-
+     /**
+      * move into public dir, so can be properly hosted from correct dir.
+      * (maybe blank screen otherwise)
+      */
+     chdir($publicDir);
      return call_user_func('response', $publicDir, $altloc);
  }
 
