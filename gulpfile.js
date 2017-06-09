@@ -145,7 +145,7 @@ gulp.task('connect-sync', function() {
       ghostMode: {
         clicks: true,
         forms: true,
-        scroll: false
+        scroll: true
       },
 
       // open browser automatically? or you can use tunnel here.  optional*
